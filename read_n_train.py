@@ -251,20 +251,19 @@ def read_data_into_list(infile):
                 #print('shape of np_ev_pmt_features_array '+str(np_ev_pmt_features_array.shape))
 		no_event_processed_in_this_file = no_event_processed_in_this_file + 1
                 #print('---> '+str(no_event_processed_in_this_file))
-                #if no_event_processed_in_this_file==100:
-                #    break
+                if no_event_processed_in_this_file==1:
+                    break
             print('.................................')
-    with h5py.File('test.h5', 'w') as hf:
+    with h5py.File('test_'+str(index)+'.h5', 'w') as hf:
         hf.create_dataset('dataList',data=event_list)
-        #for n, d in enumerate(event_list):
-        #    hf.create_dataset(name = 'dataset{:d}'.format(n), data=d)
     return event_list
 
 if __name__ == '__main__':
     print('comes inside main function ')
     filelist = sys.argv[1]
+    
     tic = time.time()
-    dataset = read_data_into_list(filelist)
+    dataset = read_data_into_list(filelist,index)
     #print(dataset)
     np_ev_pmt_features_array = np.asarray(dataset,dtype=np.float16)
     #print('shape of returned list '+str(np_ev_pmt_features_array.shape))
@@ -274,9 +273,9 @@ if __name__ == '__main__':
     #print('shape of numpy arrays '+str(_events.shape))
     toc = time.time()
     print(str(toc-tic))
-    for k in range(len(np_ev_pmt_features_array[0])):
-        #print('shape of a given 2D (event, feature) slice of 3D dataset for '+str(k)+'-th PMT is '+str(np_ev_pmt_features_array[:,k,:].shape))
-        #print(str(np_ev_pmt_features_array[:,k,:]))
-        #run_training(np_ev_pmt_features_array[:,k,:])
-        #if k==0:
-            break
+    #for k in range(len(np_ev_pmt_features_array[0])):
+    #    #print('shape of a given 2D (event, feature) slice of 3D dataset for '+str(k)+'-th PMT is '+str(np_ev_pmt_features_array[:,k,:].shape))
+    #    #print(str(np_ev_pmt_features_array[:,k,:]))
+    #    #run_training(np_ev_pmt_features_array[:,k,:])
+    #    #if k==0:
+    #        break
